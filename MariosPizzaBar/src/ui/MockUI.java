@@ -28,6 +28,10 @@ public class MockUI implements UI {
     public String getOutput() {
         return output.get(outputIndex++);
     }
+
+    public ArrayList<String> getOutputAsArray() {
+        return output;
+    }
     
     public int getOutputSize() {
         return output.size();

@@ -1,4 +1,4 @@
-package mariospizzabar;
+package core;
 
 import java.util.ArrayList;
 import ui.UI;
@@ -16,7 +16,7 @@ public class Controller {
         this.items = items;
     }
     
-    public void nameToUppercase() {
+    public void inputToUppercase() {
         ui.println(ui.getInput().toUpperCase());
     }
     
