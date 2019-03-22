@@ -5,7 +5,7 @@ public class MariosPizzaBar {
 
     public static void main(String[] args) {
         
-        System.out.println("Alexander test");
+        System.out.println("Alexander test");;
     }
 
 }
