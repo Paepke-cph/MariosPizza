@@ -8,7 +8,8 @@ import java.util.ArrayList;
 public class MockUI implements UI {
     private ArrayList<String> output = new ArrayList<>();
     private String[] input;
-    private int index;
+    private int inputIndex;
+    private int outputIndex;
     
     public MockUI(String[] input) {
         this.input = input;
@@ -16,7 +17,7 @@ public class MockUI implements UI {
     
     @Override
     public String getInput() {
-        return input[index++];
+        return input[inputIndex++];
     }
 
     @Override
@@ -24,4 +25,11 @@ public class MockUI implements UI {
         output.add(str);
     }
 
+    public String getOutput() {
+        return output.get(outputIndex++);
+    }
+    
+    public int getOutputSize() {
+        return output.size();
+    }
 }
