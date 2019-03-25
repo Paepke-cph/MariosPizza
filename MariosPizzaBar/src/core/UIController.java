@@ -17,8 +17,14 @@ public class UIController {
      * @return int corresponding to the menu which was choosen.
      */
     public int getMenuChoice() {
-        int index = Integer.parseInt(ui.getInput());
-        index--;
+        int index = 0;
+        try {
+            index = Integer.parseInt(ui.getInput());
+            index--;
+        }
+        catch(NumberFormatException ex) {
+            index = -2;
+        }
         return index;
     } 
     

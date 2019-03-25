@@ -33,8 +33,8 @@ public class Pizza {
     @Override
     public String toString() {
         if(name.toCharArray().length > 6)
-            return nr + " \t" + name + " \t\t" + price;
+            return nr + "# \t" + name + " \t\t" + price;
         else
-            return nr + " \t" + name + " \t\t\t" + price;
+            return nr + "# \t" + name + " \t\t\t" + price;
     }
 }

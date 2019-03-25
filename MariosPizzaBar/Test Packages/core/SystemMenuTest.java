@@ -21,7 +21,7 @@ public class SystemMenuTest {
      */
     @Test
     public void testGetText() {
-        assertTrue(menu.getText().contains("This is the main menu"));
+        assertTrue(menu.getText().contains("Main menu!"));
         assertFalse(menu.getText().contains("This is the pizza menu"));
     }
 

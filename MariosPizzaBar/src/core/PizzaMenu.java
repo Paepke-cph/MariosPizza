@@ -63,4 +63,13 @@ public class PizzaMenu {
             return false;
         }
     }
+    
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        for (Pizza pizza : menu) {
+            builder.append(pizza).append("\n");
+        }
+        return builder.toString();
+    }
 }

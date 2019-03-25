@@ -10,15 +10,17 @@ public class UIControllerTest {
     private MockUI mock;
     
     public UIControllerTest() {
-        String[] input = new String[] {"1","2"};
+        String[] input = new String[] {"1","2","x","0"};
         mock = new MockUI(input);
         controller = new UIController(mock);
     }
     
     @Test
     public void testGetMenuChoice() {
-        assertEquals(0,controller.getMenuChoice());
-        assertEquals(1,controller.getMenuChoice());
+        assertEquals(0, controller.getMenuChoice());
+        assertEquals(1, controller.getMenuChoice());
+        assertEquals(-2, controller.getMenuChoice());
+        assertEquals(-1, controller.getMenuChoice());
     }
     
     @Test

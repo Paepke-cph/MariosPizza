@@ -3,15 +3,31 @@ package core;
 public enum SystemMenu {
     
     
+    /*
+    Format of the ENUMS:
+    1st param is the name of the menu
+    2nd param is the text to be dispayed when entering the menu
+    3rd param is the menu options from that given menu.
+    */
     
-    PIZZA_MENU("Pizza Menu","This is the pizza menu"),
+    PIZZA_MENU("Pizza Menu",
+            "The list of the available pizzas"),
     
-    SEE_ORDER_MENU("See Orders","This is the see order menu"),
-    CREATE_ORDER_MENU("Create Order","This is the create order menu"),
-    REMOVE_ORDER_MENU("Remove Order","This is the remove order menu"),
-    ORDER_MENU("Order Menu","This is the order list", SEE_ORDER_MENU, CREATE_ORDER_MENU, REMOVE_ORDER_MENU),
+    SEE_ORDER_MENU("See Orders",
+            "All currently active orders"),
+    CREATE_ORDER_MENU("Create Order",
+            "Create a order!"),
+    REMOVE_ORDER_MENU("Remove Order",
+            "Complete an orde!"),
+    ORDER_MENU("Order Menu",
+            "What do you want to do now?",
+            SEE_ORDER_MENU, CREATE_ORDER_MENU, REMOVE_ORDER_MENU),
     
-    MAIN_MENU("Main Menu","This is the main menu", PIZZA_MENU, ORDER_MENU);
+    MAIN_MENU("Main Menu",
+            "Main menu!"
+                    + "\nTo close the program, press 0"
+                    + "\nChoose one of the following menues by inputting their corresponding numbrers",
+            PIZZA_MENU, ORDER_MENU);
     
     
     
@@ -20,12 +36,12 @@ public enum SystemMenu {
     private SystemMenu[] otherMenu;
     SystemMenu(String name, String text,SystemMenu ... menu) {
         this.name = name;
-        this.text = text + "\n";
-        if(menu.length == 0) this.text += "1) " + "Main Menu";
+        this.text = text;
+        if(menu.length == 0) this.text += "\n1) " + "Main Menu";
         for (int i = 0; i < menu.length; i++) {
-            this.text += (i+1)+") " + menu[i].getName() + "\n";
+            this.text += "\n" + (i+1)+") " + menu[i].getName();
             if(i == menu.length-1 && !name.equals("Main Menu"))
-                this.text += (i+2)+") " + "Main Menu";
+                this.text += "\n" + (i+2)+") " + "Main Menu";
         }
         otherMenu = menu;
     }
@@ -39,7 +55,7 @@ public enum SystemMenu {
     
     public int getMenuSize() {
         if(otherMenu == null || otherMenu.length == 0) return 1;
-        else return otherMenu.length;
+        else return otherMenu.length + 1;
     }
     
     /**
