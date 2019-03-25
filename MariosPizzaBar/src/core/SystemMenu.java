@@ -13,6 +13,9 @@ public enum SystemMenu {
     
     MAIN_MENU("Main Menu","This is the main menu", PIZZA_MENU, ORDER_MENU);
     
+    
+    
+    
     private String name, text;
     private SystemMenu[] otherMenu;
     SystemMenu(String name, String text,SystemMenu ... menu) {
@@ -34,6 +37,17 @@ public enum SystemMenu {
         return text;
     }
     
+    public int getMenuSize() {
+        if(otherMenu == null || otherMenu.length == 0) return 1;
+        else return otherMenu.length;
+    }
+    
+    /**
+     * Finds the corresponding menu, from the current menu, if the number given is larger than
+     * the total number of menus, the default option is the MAIN_MENU.
+     * @param index The index of the selected menu.
+     * @return The menu corresponding to the given index.
+     */
     public SystemMenu getMenu(int index) {
         if(otherMenu == null || index >= otherMenu.length)
             return MAIN_MENU;

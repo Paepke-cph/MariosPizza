@@ -18,6 +18,14 @@ public class Order {
         this.customer = customer;
         this.pickUpTime = pickUpTime;
     }
+    
+    public double getTotalPrice() {
+        double sum = 0.0;
+        for (Pizza piz : pizza) {
+            sum += piz.getPrice();
+        }
+        return sum;
+    }
 
     public int getOrderID() {
         return id;

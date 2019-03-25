@@ -30,4 +30,9 @@ public class SystemMenuTest {
         assertEquals(SystemMenu.PIZZA_MENU, menu.getMenu(0));
         assertEquals(SystemMenu.MAIN_MENU, menu.getMenu(99));
     }
+    
+    @Test
+    public void testGetMenuSize() {
+        assertEquals(1, SystemMenu.PIZZA_MENU.getMenuSize());
+    }
 }
