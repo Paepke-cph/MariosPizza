@@ -46,4 +46,13 @@ public class PizzaMenuTest {
         assertEquals(6, menu.getNumberOfItems());
         assertFalse(removed);
     }
+    
+    @Test
+    public void testParseString() {
+        String input =  "1" + " Vesuvio " + "57";
+        Pizza piz = menu.parseString(input);
+        assertEquals(1, piz.getNumber());
+        assertEquals("Vesuvio", piz.getName());
+        assertEquals(57, piz.getPrice(), 0.0);
+    }
 }

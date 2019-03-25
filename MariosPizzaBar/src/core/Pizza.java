@@ -29,4 +29,12 @@ public class Pizza {
     public double getPrice() {
         return price;
     }
+    
+    @Override
+    public String toString() {
+        if(name.toCharArray().length > 6)
+            return nr + " \t" + name + " \t\t" + price;
+        else
+            return nr + " \t" + name + " \t\t\t" + price;
+    }
 }

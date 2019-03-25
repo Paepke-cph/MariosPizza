@@ -8,10 +8,39 @@ import java.util.ArrayList;
 public class PizzaMenu {
     ArrayList<Pizza> menu;
 
+    PizzaMenu(String[] pizza) {
+        menu = new ArrayList<>();
+        for (String string : pizza) {
+            Pizza parsedPizza = parseString(string); 
+            if(parsedPizza != null)
+                menu.add(parsedPizza);
+        }
+    }
+    
     PizzaMenu(ArrayList<Pizza> menu) {
         this.menu = menu;
     }
 
+    /**
+     * Parses a given string into the an object of type Pizza
+     * @param string The string to be pased
+     * @return The resulting pizza of the parsing.
+     */
+    public Pizza parseString(String string) {
+        Pizza pizza = null;
+        try {
+            String[] subs = string.split(" ");
+            int nr = Integer.parseInt(subs[0]);
+            String name = subs[1];
+            double price = Double.parseDouble(subs[2]);
+            pizza = new Pizza(nr,name,"",price);
+        }
+        catch (NumberFormatException ex) {
+            // The receiving input did not match what was expected.
+        }
+        return pizza;
+    }
+    
     public int getNumberOfItems() {
         return menu.size();
     }
