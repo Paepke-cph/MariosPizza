@@ -3,17 +3,17 @@ package mariospizzabar;
 import java.io.*;
 import java.util.ArrayList;
 
-public class Menukort {
+public class Menu {
 
     private ArrayList<Pizza> menukort = new ArrayList<>();
 
 
-    public void createMenukortFromFile() {
+    public void createMenuFromFile() {
         String lineRead;
         String[] splitLine;
         Pizza pizza;
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\madse\\Desktop\\Marios\\MariosPizza\\MariosPizzaBar\\src\\mariospizzabar\\Menukort.txt")))
+        try (BufferedReader reader = new BufferedReader(new FileReader("Menu.txt")))
         {
             lineRead = reader.readLine();
             while (lineRead != null) {

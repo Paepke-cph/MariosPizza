@@ -4,29 +4,30 @@ public class MariosPizzaBar {
 
 
     public static void main(String[] args) {
-        Menukort menu = new Menukort();
+        Menu menu = new Menu();
 
-        menu.createMenukortFromFile();
+        menu.createMenuFromFile();
+        menu.showMenu();
 
         Pizza pizza1 = new Pizza(13, "Salat", 60);
         Pizza pizza2 = new Pizza (13, "Vesuvio", 45);
         Pizza pizza3 = new Pizza(15, "Hawaii", 40);
-        Kunde kunde = new Kunde("Mads", 12345, "Flensborggade 41");
-        Kunde kunde2 = new Kunde("Signe", 12345, "Flensborggade 41");
+        Customer customer = new Customer("Mads", 12345, "Flensborggade 41");
+        Customer customer2 = new Customer("Signe", 12345, "Flensborggade 41");
 
-        Bestilling bestilling1 = new Bestilling(pizza1, kunde);
-        bestilling1.tilføjTilBestilling(pizza3);
+        Order order1 = new Order(pizza1, customer);
+        order1.tilføjTilBestilling(pizza3);
 
-        System.out.println (bestilling1);
+        System.out.println (order1);
 
-        Bestilling bestilling2 = new Bestilling (pizza2, kunde2);
+        Order order2 = new Order(pizza2, customer2);
 
 
-        BestillingsListe liste = new BestillingsListe ();
+        OrderList liste = new OrderList();
 
-        liste.tilføjBestilling (bestilling1);
-        liste.visBestillingsListe ();
-        liste.tilføjBestilling (bestilling2);
+        liste.addOrderToList(order1);
+        liste.showOrderList();
+        liste.addOrderToList(order2);
     }
 
 }

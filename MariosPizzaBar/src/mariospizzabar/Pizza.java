@@ -2,46 +2,46 @@ package mariospizzabar;
 
 public class Pizza {
 
-    private int nummer;
-    private String navn;
-    private double pris;
+    private int num;
+    private String name;
+    private double price;
 
-    public Pizza(int nummer, String navn, double pris) {
-        this.nummer = nummer;
-        this.navn = navn;
-        this.pris = pris;
+    public Pizza(int num, String name, double price) {
+        this.num = num;
+        this.name = name;
+        this.price = price;
     }
 
-    public int getNummer() {
-        return nummer;
+    public int getNum() {
+        return num;
     }
 
-    public void setNummer(int nummer) {
-        this.nummer = nummer;
+    public void setNum(int num) {
+        this.num = num;
     }
 
-    public String getNavn() {
-        return navn;
+    public String getName() {
+        return name;
     }
 
-    public void setNavn(String navn) {
-        this.navn = navn;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public double getPris() {
-        return pris;
+    public double getPrice() {
+        return price;
     }
 
-    public void setPris(double pris) {
-        this.pris = pris;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(nummer).append(". ");
-        sb.append(navn).append(" ");
-        sb.append(pris).append(" ");
+        sb.append(num).append(". ");
+        sb.append(name).append(" ");
+        sb.append(price).append(" ");
         return sb.toString();
     }
 }
