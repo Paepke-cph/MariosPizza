@@ -1,5 +1,6 @@
 package core;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 /**
@@ -9,11 +10,13 @@ public class Order {
     private final int id;
     private ArrayList<Pizza> pizza;
     private Customer customer;
+    private LocalTime pickUpTime;
     
-    public Order(int id, ArrayList<Pizza> pizza, Customer customer) {
+    public Order(int id, ArrayList<Pizza> pizza, Customer customer, LocalTime pickUpTime) {
         this.id = id;
         this.pizza = pizza;
         this.customer = customer;
+        this.pickUpTime = pickUpTime;
     }
 
     public int getOrderID() {
@@ -26,5 +29,9 @@ public class Order {
 
     public Customer getCustomer() {
         return customer;
+    }
+
+    public LocalTime getPickUpTime() {
+        return pickUpTime;
     }
 }

@@ -40,9 +40,4 @@ public enum SystemMenu {
         else
             return otherMenu[index];
     }
-    
-    @Override
-    public String toString() {
-        return text;
-    }
 }
