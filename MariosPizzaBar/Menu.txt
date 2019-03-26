@@ -1,0 +1,6 @@
+1 Vesuvio tomatsauce,ost,skinke,oregano 57
+2 Amerikaner tomatsauce,ost,oksefars,oregano 57
+3 Hawaii tomatsauce,ost,skinke,ananas 61
+4 pepperoni ost,tomat,pepperoni 66
+5 SalatPizza tomatsauce,ost,kebab,salat,dressing 72.0
+6 Mexicaner tomatsauce,ost,jalapenos,chili,hvidl�gsdressing 69.0
