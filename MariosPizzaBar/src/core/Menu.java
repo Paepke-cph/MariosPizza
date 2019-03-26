@@ -1,16 +1,19 @@
 package core;
 //Alexander
 
-import Storage.FileHandler;
+import Storage.FileStorage;
+import UI.UI;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
 
+    private UI ui;
     private ArrayList<Pizza> menu;
-    final private FileHandler fileHandler = new FileHandler();
+    final private FileStorage fileHandler = new FileStorage();
 
-    public Menu() {
+    public Menu(UI ui) {
+        this.ui = ui;
         this.menu = new ArrayList();
         menuFromFile();
     }
@@ -56,7 +59,6 @@ public class Menu {
         fileHandler.removePizza(pizzaNumber);
         for (int i = 0; i < menu.size(); i++) {
             if (menu.get(i).getNumber() == pizzaNumber) {
-                menu.get(i).removePizza();
                 menu.remove(i);
                 i = menu.size();
             }
@@ -85,9 +87,9 @@ public class Menu {
     }
 
     public void printMenu() {
-        System.out.println("---------------------- Mario's Pizzabar ----------------------");
+        ui.println("---------------------- Mario's Pizzabar ----------------------");
         for (Pizza pizza : menu) {
-            System.out.println(pizza + " kr.");
+            ui.println(pizza + " kr.");
         }
     }
 

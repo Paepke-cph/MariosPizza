@@ -1,16 +1,21 @@
 package core;
 
 //Alexander
-import Storage.FileHandler;
+import Storage.FileStorage;
+import Storage.Storage;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Statistics {
 
-    final private FileHandler fileHandler = new FileHandler();
+    final private Storage storage;
 
+    public Statistics(Storage storage) {
+        this.storage = storage;
+    }
+    
     private void calculateTurnover(int startDate, int endDate) {
-        ArrayList<String> numbers = fileHandler.readFromFile("turnover.txt");
+        ArrayList<String> numbers = storage.readFromFile("turnover.txt");
         String[] splitLine;
         double turnover = 0;
         for (String number : numbers) {
@@ -63,7 +68,7 @@ public class Statistics {
     }
     
     private void calculatePopularPizza(int startDate, int endDate) {
-        ArrayList<String> numbers = fileHandler.readFromFile("popularPizza.txt");
+        ArrayList<String> numbers = storage.readFromFile("popularPizza.txt");
         int[] pizzaCount = new int[100];
         String[] splitLine;
         for (String number : numbers) {

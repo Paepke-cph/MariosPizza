@@ -9,7 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class FileHandler implements DataHandler {
+public class FileStorage implements Storage {
     
     @Override
     public void completeOrder(int orderNumber){
@@ -27,6 +27,7 @@ public class FileHandler implements DataHandler {
         renameFile("ordersToMakeTemp.txt", "ordersToMake.txt");
     };
     
+    @Override
     public ArrayList<Integer> getOrderNumbers(){
         ArrayList<Integer> orderNumbers = new ArrayList();
         String[] splitLine;
@@ -60,6 +61,7 @@ public class FileHandler implements DataHandler {
         renameFile("MenuTemp.txt", "Menu.txt");
     }
 
+    @Override
     public void writeToFile(String words, String filename) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
             writer.write(words);
@@ -69,6 +71,7 @@ public class FileHandler implements DataHandler {
         }
     }
     
+    @Override
     public ArrayList<String> readFromFile(String filename){
         ArrayList<String> file = new ArrayList();
         String lineRead;

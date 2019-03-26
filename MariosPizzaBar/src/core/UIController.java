@@ -1,9 +1,8 @@
 package core;
 
+import Storage.FileStorage;
 import UI.UI;
-import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.Month;
 import java.util.ArrayList;
 import toolbox.SortedQueue;
 
@@ -11,11 +10,12 @@ public class UIController {
 
     final private UI ui;
     final private Order orderHandler = new Order();
-    final private Menu menuHandler = new Menu();
-    final private Statistics statistics = new Statistics();
+    final private Menu menuHandler;
+    final private Statistics statistics = new Statistics(new FileStorage());
 
     public UIController(UI ui) {
         this.ui = ui;
+        menuHandler = new Menu(ui);
     }
 
     public void startProgram() {
@@ -57,7 +57,7 @@ public class UIController {
         }
     }
 
-    private void menuCard() {
+    public void menuCard() {
         int choice = 0;
         while (choice != -1) {
             try {
@@ -81,11 +81,10 @@ public class UIController {
             try {
                 choice = Integer.parseInt(ui.getInput());
                 if (choice < 1 || choice > 4) {
-                    throw new IllegalArgumentException();
+                    throw new NumberFormatException();
                 }
                 switch (choice) {
                     case 1:
-                        //orderHandler.listOrdersToMake();
                         for (Order order : orderHandler.loadFromFile()) {
                             ui.println(order.toString());
                         }
@@ -104,27 +103,9 @@ public class UIController {
         }
     }
 
-    private void newOrder() {
-        int choice = 0;
-        int menuSize = menuHandler.getMenu().size();
-        ArrayList<Pizza> pizza = new ArrayList();
-        Order order;
-        while (choice != -1) {
-            menuHandler.printMenu();
-            ui.println("\nVælg pizza eller -1 for at afslutte");
-            try {
-                choice = Integer.parseInt(ui.getInput());
-                if (choice != -1) {
-                    if (choice < menuSize + 1 && choice > 0) {
-                        pizza.add(menuHandler.getPizza(choice));
-                    } else {
-                        throw new NumberFormatException();
-                    }
-                }
-            } catch (NumberFormatException e) {
-                ui.printf("Ikke et valid input. Vælg mellem 1 - %d%n", menuSize);
-            }
-        }
+    public void newOrder() {
+        Order order; 
+        ArrayList<Pizza> pizza = selectPizzas();
         ui.println("Indtast tid for afhenting: (time:minutter)");
         String[] splits = ui.getInput().split(":");
         LocalTime time = LocalTime.of(Integer.parseInt(splits[0]),Integer.parseInt(splits[1]));
@@ -134,6 +115,30 @@ public class UIController {
         for(String foodItem : printOrder){
             ui.println(foodItem);
         }
+    }
+    
+    public ArrayList<Pizza> selectPizzas() {
+        int choice = 0;
+        int menuSize = menuHandler.getMenu().size();
+        ArrayList<Pizza> pizzas = new ArrayList();
+        while (choice != -1) {
+            menuHandler.printMenu();
+            ui.println("\nVælg pizza eller -1 for at afslutte");
+            try {
+                choice = Integer.parseInt(ui.getInput());
+                if (choice != -1) {
+                    if (choice < menuSize + 1 && choice > 0) {
+                        Pizza p = menuHandler.getPizza(choice);
+                        pizzas.add(p);
+                    } else {
+                        throw new NumberFormatException();
+                    }
+                }
+            } catch (NumberFormatException e) {
+                ui.printf("Ikke et valid input. Vælg mellem 1 - %d%n", menuSize);
+            }
+        }
+        return pizzas;
     }
 
     private void completeOrder() {

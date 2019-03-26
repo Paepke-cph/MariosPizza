@@ -2,7 +2,8 @@ package core;
 
 //Alexander
 
-import Storage.FileHandler;
+import Storage.FileStorage;
+import UI.ConsoleUI;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -20,11 +21,10 @@ public class Order implements Comparable<Order>{
     private LocalDate date = LocalDate.now();
     private LocalTime time;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-    final private FileHandler fileHandler = new FileHandler();
-    final private Menu menu = new Menu();
+    final private FileStorage fileHandler = new FileStorage();
+    final private Menu menu = new Menu(new ConsoleUI());
 
     public Order(){
-        
     };
     
     public Order(int orderNumber,ArrayList<Pizza> pizza, LocalDate date, LocalTime time) {
@@ -151,11 +151,22 @@ public class Order implements Comparable<Order>{
         return order;
     }
        
-    public LocalDate getDate() { return date; }
-    public LocalTime getTime() { return time; }
+    public LocalDate getDate() {
+        return date;
+    }
+    public LocalTime getTime() {
+        return time;
+    }
 
     public int getOrderNumber() {
         return orderNumber;
+    }
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+    
+    public ArrayList<Pizza> getPizza() {
+        return pizza;
     }
     
     @Override

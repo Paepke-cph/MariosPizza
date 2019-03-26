@@ -28,13 +28,6 @@ public class Pizza {
     public double getPrice() {
         return price;
     }
-
-    public void removePizza(){
-        //this.number = null;
-        this.name = null;
-        this.toppings = null;
-        //this.price = null;
-    }
     
     @Override
     public String toString() {

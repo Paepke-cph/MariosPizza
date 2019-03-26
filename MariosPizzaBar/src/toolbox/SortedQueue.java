@@ -130,8 +130,8 @@ public class SortedQueue<T extends Comparable<T>> implements Iterable<T> {
      * @return The entry at 'index' in the queue.
      */
     private T removeAtIndex(int index) {
-        if(index == 0 || index == (size -1))
-            throw new IllegalArgumentException("Index cannot be 0 or size - 1");
+        if(index < 0 || index > (size -1))
+            throw new ArrayIndexOutOfBoundsException("Index cannot be 0 or size - 1");
         else {
             Node<T> current = firstElement;
             for (int i = 0; i < index; i++) {
