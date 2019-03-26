@@ -1,23 +1,18 @@
-package ui;
-
-import businesslogic.Pizza;
-import java.util.ArrayList;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package UI;
 
 /**
- * @author rando
+ *
+ * @author Alexander
  */
 public interface UI {
+    
+    public String getInput();
+    public void println(String words);
 
-    public int vælgPizza();
-
-    public void visPizzaValg(String string);
-
-    public void visOrdreNummer(int ordrenummer);
-
-    public void visMenukort(ArrayList<Pizza> menuKort);
-
-    public void visHovedMenu();
-
-    public String hovedMenuValg();
-
+    public void printf(String str, Object ... format);
 }
