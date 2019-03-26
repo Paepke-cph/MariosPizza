@@ -12,8 +12,8 @@ public class MockStorage implements Storage{
     private ArrayList<Order> orders;
     private ArrayList<Pizza> pizzas;
     private ArrayList<String> fileLines;
-    private ArrayList<String> fileOutput;
-    private ArrayList<Integer> orderNumbers;
+    private ArrayList<String> fileOutput = new ArrayList<>();
+    private ArrayList<Integer> orderNumbers = new ArrayList<>();
     
     public MockStorage() {
     }
@@ -67,6 +67,10 @@ public class MockStorage implements Storage{
     @Override
     public void writeToFile(String words, String filename) {
         fileOutput.add(words);
+    }
+    
+    public int outputFileSize() {
+        return fileOutput.size();
     }
     
     public void setOrderNumbers(ArrayList<Integer> orderNumbers) {

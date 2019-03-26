@@ -26,8 +26,38 @@ public class OrderTest {
     }
 
     @Test
+    public void testReturnOrder() {
+        String[] expected = new String[] {"1 2 Amerikaner " + date.toString() + " " + pickUpTime.toString(),
+                                            "1 1 Vesuvio " + date.toString() + " " + pickUpTime.toString()};
+        
+        
+        String[] result = order.returnOrder();
+        
+        assertEquals(expected.length, result.length);
+        assertEquals(expected[0],result[0]);
+        assertEquals(expected[1],result[1]);
+    }
+    
+    @Test
+    public void testGetDate() {
+        assertEquals(LocalDate.of(2000, Month.MARCH, 20), order.getDate());
+    }
+    
+    @Test
+    public void testGetTime() {
+        assertEquals(LocalTime.of(18, 30), order.getTime());
+    }
+    
+    @Test
     public void testGetTotalPrice() {
         assertEquals(pizzaPrice1+pizzaPrice2, order.getTotalPrice(),0.0);
+    }
+    
+    @Test
+    public void testGetTotalPrice_WithPizzaAddedAfterCreation() {
+        double pizzaPrice3 = 100;
+        order.addPizza(new Pizza(1,"Superman","Wow", pizzaPrice3));
+        assertEquals(pizzaPrice1+pizzaPrice2+pizzaPrice3, order.getTotalPrice(),0.0);
     }
     
     @Test
@@ -36,12 +66,19 @@ public class OrderTest {
     }
     
     @Test
-    public void testGetPizza() {
-        assertEquals(2, order.getPizza().size());
+    public void testAddPizza() {
+        order.addPizza(new Pizza(33,"Wow Pizza","Rainbow sunshine", 400));
+        assertEquals(3, order.getPizzas().size());
+    }
+    
+    @Test
+    public void testGetPizzas() {
+        assertEquals(2, order.getPizzas().size());
     }
      
      @Test
      public void testGetPickUpTime() {
          assertEquals(pickUpTime, order.getTime());
      }
+     
 }

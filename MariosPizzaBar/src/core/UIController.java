@@ -1,6 +1,7 @@
 package core;
 
 import Storage.FileStorage;
+import Storage.Storage;
 import UI.UI;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -8,14 +9,18 @@ import toolbox.SortedQueue;
 
 public class UIController {
 
-    final private UI ui;
-    final private Order orderHandler = new Order();
-    final private Menu menuHandler;
-    final private Statistics statistics = new Statistics(new FileStorage());
+    private final UI ui;
+    private final OrderHandler orderHandler;
+    private final Menu menuHandler;
+    private final Storage storage;
+    private final Statistics statistics;
 
     public UIController(UI ui) {
         this.ui = ui;
-        menuHandler = new Menu(ui);
+        storage = new FileStorage(ui);
+        statistics = new Statistics(storage);
+        menuHandler = new Menu(ui, storage);
+        orderHandler = new OrderHandler(ui,storage,menuHandler);
     }
 
     public void startProgram() {
@@ -85,7 +90,7 @@ public class UIController {
                 }
                 switch (choice) {
                     case 1:
-                        for (Order order : orderHandler.loadFromFile()) {
+                        for (Order order : orderHandler.loadOrdersFromFile()) {
                             ui.println(order.toString());
                         }
                         break;
@@ -109,8 +114,8 @@ public class UIController {
         ui.println("Indtast tid for afhenting: (time:minutter)");
         String[] splits = ui.getInput().split(":");
         LocalTime time = LocalTime.of(Integer.parseInt(splits[0]),Integer.parseInt(splits[1]));
-        order = new Order(pizza,time);
-        order.writeOrderToFile();
+        order = new Order(orderHandler.nextOrderNumber(),pizza,time);
+        orderHandler.writeOrderToFile(order);
         String[] printOrder = order.returnOrder();
         for(String foodItem : printOrder){
             ui.println(foodItem);
@@ -144,7 +149,7 @@ public class UIController {
     private void completeOrder() {
         int choice = 0;
         int[] orderNumbers = orderHandler.getOrderNumbersToMake();
-        SortedQueue<Order> orders = orderHandler.loadFromFile(); 
+        SortedQueue<Order> orders = orderHandler.loadOrdersFromFile(); 
         while (choice != -1) {
             ui.println("Vælg ordrenummer");
             ui.println("Indtast -1 for at afslutte ordre");

@@ -45,7 +45,7 @@ public class Statistics {
     }
     
     public String calculatePopularPizza(int startDate, int endDate) {
-        ArrayList<String> numbers = storage.readFromFile(Storage.POPULARPIZZA_FILE);
+        ArrayList<String> numbers = storage.readFromFile(Storage.POPULAR_PIZZA_FILE);
         int[] pizzaCount = new int[100];
         String[] splitLine;
         for (String number : numbers) {

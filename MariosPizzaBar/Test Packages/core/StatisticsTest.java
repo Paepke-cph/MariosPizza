@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 
 public class StatisticsTest {
 
-    private double val1 = 114.0, val2 = 175.0, val3 = 57.0;
+    private final double val1 = 114.0, val2 = 175.0, val3 = 57.0;
     
     public StatisticsTest() {
         
