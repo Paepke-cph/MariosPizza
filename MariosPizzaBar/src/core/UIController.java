@@ -258,19 +258,19 @@ public class UIController {
                 }
                 switch (choice) {
                     case 1:
-                        statistics.turnoverLastSevenDays();
+                        ui.println(statistics.turnoverForDuration(0, 0, 1));
                         break;
                     case 2:
-                        statistics.turnoverLastFourWeeks();
+                        ui.println(statistics.turnoverForDuration(0, 0, 4));
                         break;
                     case 3:
-                        statistics.turnoverLastsixMonths();
+                        ui.println(statistics.turnoverForDuration(0, 6, 0));
                         break;
                     case 4:
-                        statistics.turnoverLastTwelveMonths();
+                        ui.println(statistics.turnoverForDuration(0, 12, 0));
                         break;
                     case 5:
-                        statistics.turnoverAllTime();
+                        ui.println(statistics.turnoverAllTime());
                         break;
                 }
 
@@ -297,16 +297,16 @@ public class UIController {
                 }
                 switch (choice) {
                     case 1:
-                        statistics.popularPizzaLastSevenDays();
+                        ui.println(statistics.popularPizzaForDuration(0, 0, 1));
                         break;
                     case 2:
-                        statistics.popularPizzaLastFourWeeks();
+                        ui.println(statistics.popularPizzaForDuration(0, 0, 4));
                         break;
                     case 3:
-                        statistics.popularPizzaLastsixMonths();
+                        ui.println(statistics.popularPizzaForDuration(0, 6, 0));
                         break;
                     case 4:
-                        statistics.popularPizzaLastTwelveMonths();
+                        ui.println(statistics.popularPizzaForDuration(0, 12, 0));
                         break;
                     case 5:
                         statistics.popularPizzaAllTime();

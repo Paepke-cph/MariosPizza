@@ -1,8 +1,5 @@
 package Storage;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -10,6 +7,8 @@ import java.util.ArrayList;
  * @author Alexander
  */
 public interface Storage {
+    public static final String TURNOVER_FILE = "turnover.txt";
+    public static final String POPULARPIZZA_FILE = "popularPizza.txt";
     
     public void completeOrder(int orderNumber);
     public void removePizza(int pizzaNumber);

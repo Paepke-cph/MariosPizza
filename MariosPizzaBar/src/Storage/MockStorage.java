@@ -1,5 +1,7 @@
 package Storage;
 
+import core.Order;
+import core.Pizza;
 import java.util.ArrayList;
 
 /**
@@ -7,32 +9,49 @@ import java.util.ArrayList;
  */
 public class MockStorage implements Storage{
     
-    private ArrayList<Integer> orders;
-    private ArrayList<Integer> pizzas;
+    private ArrayList<Order> orders;
+    private ArrayList<Pizza> pizzas;
     private ArrayList<String> fileLines;
     private ArrayList<String> fileOutput;
     private ArrayList<Integer> orderNumbers;
     
-    public MockStorage(ArrayList<Integer> orders, ArrayList<Integer> pizzas) {
-        this.orders = orders;
-        this.pizzas = pizzas;
+    public MockStorage() {
     }
 
-    public int getOrdersSize() { return orders.size(); }
-    public int getPizzasSize() { return pizzas.size(); }
+    public void setOrders(ArrayList<Order> orders) {
+        this.orders = orders;
+    }
+    
+    public void setPizzas(ArrayList<Pizza> pizzas) {
+        this.pizzas = pizzas;
+    }
+    
+    public int getOrdersSize() {
+        return orders.size();
+    }
+    
+    public int getPizzasSize() {
+        return pizzas.size();
+    }
     
     @Override
     public void completeOrder(int orderNumber) {
-        if(orders.contains(orderNumber)) {
-            orders.remove(orderNumber);
+        int index = -1;
+        for (int i = 0; i < orders.size(); i++) {
+            if(orders.get(i).getOrderNumber() == orderNumber)
+                index = i;
         }
+        orders.remove(index);
     }
 
     @Override
     public void removePizza(int pizzaNumber) {
-        if(pizzas.contains(pizzaNumber)) {
-            pizzas.remove(pizzaNumber);
+        int index = -1;
+        for (int i = 0; i < pizzas.size(); i++) {
+            if(pizzas.get(i).getNumber() == pizzaNumber)
+                index = i;
         }
+        pizzas.remove(index);
     }
     
     public void setFileLines(ArrayList<String> fileLines) {
