@@ -12,14 +12,8 @@ import java.util.logging.Logger;
  * @author Benjamin
  */
 public class FileStorage implements Storage{
-    private final String MENU_FILE = "menu.txt";
-    private final String ARCHIVED_ORDERS_FILE = "orders.ach";
-    private final String STATS_FILE = "stats.txt";
-    
-    public FileStorage() {
-        
-    }
-    
+   
+    public FileStorage() {}
     
     @Override
     public String readAsString(String path) {

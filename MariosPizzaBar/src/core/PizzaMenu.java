@@ -32,6 +32,7 @@ public class PizzaMenu {
             String[] subs = string.split(" ");
             int nr = Integer.parseInt(subs[0]);
             String name = subs[1];
+//            String ing = subs[2];
             double price = Double.parseDouble(subs[2]);
             pizza = new Pizza(nr,name,"",price);
         }
@@ -62,6 +63,16 @@ public class PizzaMenu {
         catch (IndexOutOfBoundsException e) {
             return false;
         }
+    }
+    
+    public Pizza getPizza(int index) {
+        Pizza result = null;
+        try {
+            result = menu.get(index);
+        }
+        catch (IndexOutOfBoundsException ex) {
+        }
+        return result;
     }
     
     @Override

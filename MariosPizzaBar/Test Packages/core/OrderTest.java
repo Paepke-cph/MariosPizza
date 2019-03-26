@@ -18,7 +18,7 @@ public class OrderTest {
         ArrayList<Pizza> pizza = new ArrayList<>();
         pizza.add(new Pizza(2, "Amerikaner", "Pepperoni", pizzaPrice1));
         pizza.add(new Pizza(1, "Vesuvio", "tomatsauce", pizzaPrice2));
-        order = new Order(1, pizza, customer, pickUpTime);
+        order = new Order( pizza, pickUpTime,  customer);
     }
 
     @Test

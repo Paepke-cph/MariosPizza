@@ -3,17 +3,19 @@ package core;
 import io.FileStorage;
 import io.Storage;
 import java.util.ArrayList;
+import toolbox.SortedQueue;
 import ui.ConsoleUI;
 
 public class Main {
     
     public static void main(String[] args) {
+        SortedQueue<Order> orders = new SortedQueue<>();
         
         StorageController storageController = new StorageController(new FileStorage());
         PizzaMenu menu = new PizzaMenu(storageController.getFileLines("menu.txt"));
 
         boolean isRunning = true;   
-        UIController uiController = new UIController(new ConsoleUI());
+        UIController uiController = new UIController(new ConsoleUI(),menu);
         SystemMenu currentMenu = SystemMenu.MAIN_MENU;
 
         uiController.displayMenu(currentMenu.getText());
@@ -26,16 +28,27 @@ public class Main {
                 uiController.displayMenu("Invalid input, try again!");
             else {
                 currentMenu = currentMenu.getMenu(choice);
+                uiController.displayMenu(currentMenu.getText());
                 switch(currentMenu) {
                     case PIZZA_MENU:
                         uiController.displayText(menu.toString());
                         break;
                     case SEE_ORDER_MENU:
-                        // Display the active orders to the screen.
+                        if(orders.size() == 0) {
+                            uiController.displayText("There are no active orders at the moment.");
+                        }
+                        else {
+                            for(Order order : orders) {
+                                uiController.displayText(order.toString()+"\n");
+                            }
+                        }
                         break;
                     case CREATE_ORDER_MENU:
-                        // Create an order - and add to the list of active orders
-                        // When creation is done return to main menu?
+                        Order order = uiController.createOrder();
+                        if(order != null)
+                            orders.add(order);
+                        currentMenu = SystemMenu.MAIN_MENU;
+                        uiController.displayMenu(currentMenu.getText());
                         break;
                     case REMOVE_ORDER_MENU:
                         // Choose which order to remove - and save the order to file
@@ -47,7 +60,6 @@ public class Main {
                     default:
                         throw new AssertionError(currentMenu.name());
                 }
-                uiController.displayMenu(currentMenu.getText());
             }
         }
     }
