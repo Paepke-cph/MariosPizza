@@ -16,6 +16,11 @@ public class ConsoleUI implements UI{
     public void println(String words) {
         System.out.println(words);
     }
+
+    @Override
+    public void printf(String str, Object... format) {
+        System.out.printf(str,format);
+    }
     
     
 }

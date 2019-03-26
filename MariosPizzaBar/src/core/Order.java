@@ -8,40 +8,84 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import toolbox.SortedQueue;
 
-public class Orders {
+public class Order implements Comparable<Order>{
 
     private int orderNumber;
     private ArrayList<Pizza> pizza;
     private Customer customer;
     private double totalPrice;
     private LocalDate date = LocalDate.now();
-    private LocalTime time = LocalTime.now();
+    private LocalTime time;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
     final private FileHandler fileHandler = new FileHandler();
+    final private Menu menu = new Menu();
 
-    public Orders(){
+    public Order(){
         
     };
     
-    public Orders(ArrayList<Pizza> pizza) {
+    public Order(int orderNumber,ArrayList<Pizza> pizza, LocalDate date, LocalTime time) {
+        this.orderNumber = orderNumber;
+        this.pizza = pizza;
+        this.date = date;
+        this.time = time;
+        calculateTotalPrice();
+    }
+    
+    public Order(ArrayList<Pizza> pizza, LocalTime time) {
         this.orderNumber = nextOrderNumber();
         this.pizza = pizza;
+        this.time = time;
         calculateTotalPrice();
     }
 
-    public Orders(ArrayList<Pizza> pizza, String firstName) {
+    public Order(ArrayList<Pizza> pizza, String firstName, LocalTime time) {
         this.orderNumber = nextOrderNumber();
         this.pizza = pizza;
+        this.time = time;
         this.customer = new Customer(firstName);
         calculateTotalPrice();
     }
 
-    public Orders(ArrayList<Pizza> pizza, String firstName, String lastName, String address) {
+    public Order(ArrayList<Pizza> pizza, String firstName, String lastName, String address, LocalTime time) {
         this.orderNumber = nextOrderNumber();
         this.pizza = pizza;
+        this.time = time;
         this.customer = new Customer(firstName, lastName, address);
         calculateTotalPrice();
+    }
+    
+    public SortedQueue<Order> loadFromFile() {
+        SortedQueue<Order> orders = new SortedQueue<>(); 
+        ArrayList<String> lines = fileHandler.readFromFile("ordersToMake.txt");
+        HashMap<Integer,ArrayList<Pizza>> pizzaMap = new HashMap<>();
+        for (String line : lines) {
+            int nr = Integer.parseInt((line.split(" "))[0]);
+            int pizNr = Integer.parseInt((line.split(" "))[1]);
+            Pizza pizza = menu.getPizza(pizNr);
+            if(pizzaMap.containsKey(nr)) {
+                pizzaMap.get(nr).add(pizza);
+            }
+            else{
+                pizzaMap.put(nr, new ArrayList<>());
+                pizzaMap.get(nr).add(pizza);
+            }
+        }
+        ArrayList<Integer> orderDone = new ArrayList<>();
+        for (String line : lines) {
+            int nr = Integer.parseInt((line.split(" "))[0]);
+            if(!orderDone.contains(nr)) {
+                ArrayList<Pizza> pizzas = pizzaMap.get(nr);
+                LocalDate date = LocalDate.parse((line.split(" "))[3]);
+                LocalTime time = LocalTime.parse((line.split(" "))[4]);
+                orders.add(new Order(nr,pizzas,date,time));
+                orderDone.add(nr);
+            }
+        }
+        return orders;
     }
     
     private void calculateTotalPrice(){
@@ -107,5 +151,33 @@ public class Orders {
         return order;
     }
        
+    public LocalDate getDate() { return date; }
+    public LocalTime getTime() { return time; }
+
+    public int getOrderNumber() {
+        return orderNumber;
+    }
     
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("\nOrder Nummer: ").append(orderNumber);
+        builder.append("\nAfhentning: ").append(date).append(" - ").append(time);
+        for (Pizza piz : pizza) {
+            builder.append("\n").append(piz);
+        }
+        return builder.toString();
+                
+    }
+
+    @Override
+    public int compareTo(Order other) {
+        int cmp = date.compareTo(other.getDate());
+        if(cmp == 0) {
+            cmp = time.compareTo(other.getTime());
+        }
+        return cmp;
+    }
+
+
 }

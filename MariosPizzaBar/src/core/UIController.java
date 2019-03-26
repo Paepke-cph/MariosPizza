@@ -1,12 +1,16 @@
 package core;
 
 import UI.UI;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.Month;
 import java.util.ArrayList;
+import toolbox.SortedQueue;
 
 public class UIController {
 
     final private UI ui;
-    final private Orders orderHandler = new Orders();
+    final private Order orderHandler = new Order();
     final private Menu menuHandler = new Menu();
     final private Statistics statistics = new Statistics();
 
@@ -81,7 +85,10 @@ public class UIController {
                 }
                 switch (choice) {
                     case 1:
-                        orderHandler.listOrdersToMake();
+                        //orderHandler.listOrdersToMake();
+                        for (Order order : orderHandler.loadFromFile()) {
+                            ui.println(order.toString());
+                        }
                         break;
                     case 2:
                         newOrder();
@@ -101,7 +108,7 @@ public class UIController {
         int choice = 0;
         int menuSize = menuHandler.getMenu().size();
         ArrayList<Pizza> pizza = new ArrayList();
-        Orders order;
+        Order order;
         while (choice != -1) {
             menuHandler.printMenu();
             ui.println("\nVælg pizza eller -1 for at afslutte");
@@ -115,10 +122,13 @@ public class UIController {
                     }
                 }
             } catch (NumberFormatException e) {
-                System.out.printf("Ikke et valid input. Vælg mellem 1 - %d%n", menuSize);
+                ui.printf("Ikke et valid input. Vælg mellem 1 - %d%n", menuSize);
             }
         }
-        order = new Orders(pizza);
+        ui.println("Indtast tid for afhenting: (time:minutter)");
+        String[] splits = ui.getInput().split(":");
+        LocalTime time = LocalTime.of(Integer.parseInt(splits[0]),Integer.parseInt(splits[1]));
+        order = new Order(pizza,time);
         order.writeOrderToFile();
         String[] printOrder = order.returnOrder();
         for(String foodItem : printOrder){
@@ -129,11 +139,14 @@ public class UIController {
     private void completeOrder() {
         int choice = 0;
         int[] orderNumbers = orderHandler.getOrderNumbersToMake();
+        SortedQueue<Order> orders = orderHandler.loadFromFile(); 
         while (choice != -1) {
             ui.println("Vælg ordrenummer");
             ui.println("Indtast -1 for at afslutte ordre");
             try {
-                orderHandler.listOrdersToMake();
+                for (Order order : orders) {
+                    ui.println(order.toString());
+                }
                 choice = Integer.parseInt(ui.getInput());
                 if (choice != -1) {
                     boolean orderExist = false;
@@ -146,6 +159,13 @@ public class UIController {
                         throw new NumberFormatException();
                     }
                     orderHandler.completeOrder(choice);
+                    int index = 0;
+                    for (int i = 0; i < orders.size(); i++) {
+                        if (orders.get(i).getOrderNumber() == choice) {
+                          index = i;  
+                        }
+                    }
+                    orders.remove(index);
                 }
             } catch (NumberFormatException e) {
                 ui.println("Ikke et valid input. vælg et ordrenummer eller -1");

@@ -27,5 +27,10 @@ public class MockUI implements UI{
     public int getOutputSize(){
         return 1;
     }
+
+    @Override
+    public void printf(String str, Object... format) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
