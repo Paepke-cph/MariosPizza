@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ * @author Mads
+ */
 public class StatisticsTest {
 
     private final double val1 = 114.0, val2 = 175.0, val3 = 57.0;

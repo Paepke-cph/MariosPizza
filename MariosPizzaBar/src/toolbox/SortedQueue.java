@@ -1,7 +1,9 @@
 package toolbox;
 
 import java.util.Iterator;
-
+/**
+ * @author Benjamin
+ */
 public class SortedQueue<T extends Comparable<T>> implements Iterable<T> {
     private Node<T> firstElement, lastElement;
     private int size; 

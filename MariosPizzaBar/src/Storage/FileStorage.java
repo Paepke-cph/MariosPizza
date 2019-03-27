@@ -1,6 +1,8 @@
 package Storage;
 
-//Alexander
+/**
+ * @author Alexander 
+ */
 import UI.UI;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

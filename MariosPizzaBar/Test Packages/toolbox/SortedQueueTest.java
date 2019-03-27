@@ -4,6 +4,9 @@ import java.util.Iterator;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ * @author Benjamin
+ */
 public class SortedQueueTest {
 
     private SortedQueue<Integer> queue;

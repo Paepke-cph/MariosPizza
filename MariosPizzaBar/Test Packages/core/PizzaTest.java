@@ -3,6 +3,9 @@ package core;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ * @author Benjamin
+ */
 public class PizzaTest {
     Pizza pizza;
     public PizzaTest() {
