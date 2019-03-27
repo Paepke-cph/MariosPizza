@@ -5,7 +5,7 @@ public class Customer {
 
     private String firstName;
     private String lastName;
-    private String Address;
+    private String address;
     
     public Customer(){};
 
@@ -21,12 +21,16 @@ public class Customer {
     public Customer(String firstName, String lastName, String Address) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.Address = Address;
+        this.address = Address;
     }
 
+    public String getFirstName() { return firstName; }
+    public String getLastName() { return lastName; }
+    public String getAddress() { return address; }    
+    
     @Override
     public String toString() {
-        return firstName + " " + lastName + " " + Address;
+        return firstName + " " + lastName + " " + address;
     }
     
     

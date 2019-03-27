@@ -1,21 +1,26 @@
 package core;
 
+import Storage.FileStorage;
+import Storage.Storage;
 import UI.UI;
-import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.Month;
 import java.util.ArrayList;
 import toolbox.SortedQueue;
 
 public class UIController {
 
-    final private UI ui;
-    final private Order orderHandler = new Order();
-    final private Menu menuHandler = new Menu();
-    final private Statistics statistics = new Statistics();
+    private final UI ui;
+    private final OrderHandler orderHandler;
+    private final Menu menuHandler;
+    private final Storage storage;
+    private final Statistics statistics;
 
     public UIController(UI ui) {
         this.ui = ui;
+        storage = new FileStorage(ui);
+        statistics = new Statistics(storage);
+        menuHandler = new Menu(ui, storage);
+        orderHandler = new OrderHandler(ui,storage,menuHandler);
     }
 
     public void startProgram() {
@@ -57,7 +62,7 @@ public class UIController {
         }
     }
 
-    private void menuCard() {
+    public void menuCard() {
         int choice = 0;
         while (choice != -1) {
             try {
@@ -81,12 +86,11 @@ public class UIController {
             try {
                 choice = Integer.parseInt(ui.getInput());
                 if (choice < 1 || choice > 4) {
-                    throw new IllegalArgumentException();
+                    throw new NumberFormatException();
                 }
                 switch (choice) {
                     case 1:
-                        //orderHandler.listOrdersToMake();
-                        for (Order order : orderHandler.loadFromFile()) {
+                        for (Order order : orderHandler.loadOrdersFromFile()) {
                             ui.println(order.toString());
                         }
                         break;
@@ -104,11 +108,24 @@ public class UIController {
         }
     }
 
-    private void newOrder() {
+    public void newOrder() {
+        Order order; 
+        ArrayList<Pizza> pizza = selectPizzas();
+        ui.println("Indtast tid for afhenting: (time:minutter)");
+        String[] splits = ui.getInput().split(":");
+        LocalTime time = LocalTime.of(Integer.parseInt(splits[0]),Integer.parseInt(splits[1]));
+        order = new Order(orderHandler.nextOrderNumber(),pizza,time);
+        orderHandler.writeOrderToFile(order);
+        String[] printOrder = order.returnOrder();
+        for(String foodItem : printOrder){
+            ui.println(foodItem);
+        }
+    }
+    
+    public ArrayList<Pizza> selectPizzas() {
         int choice = 0;
         int menuSize = menuHandler.getMenu().size();
-        ArrayList<Pizza> pizza = new ArrayList();
-        Order order;
+        ArrayList<Pizza> pizzas = new ArrayList();
         while (choice != -1) {
             menuHandler.printMenu();
             ui.println("\nVælg pizza eller -1 for at afslutte");
@@ -116,7 +133,8 @@ public class UIController {
                 choice = Integer.parseInt(ui.getInput());
                 if (choice != -1) {
                     if (choice < menuSize + 1 && choice > 0) {
-                        pizza.add(menuHandler.getPizza(choice));
+                        Pizza p = menuHandler.getPizza(choice);
+                        pizzas.add(p);
                     } else {
                         throw new NumberFormatException();
                     }
@@ -125,21 +143,13 @@ public class UIController {
                 ui.printf("Ikke et valid input. Vælg mellem 1 - %d%n", menuSize);
             }
         }
-        ui.println("Indtast tid for afhenting: (time:minutter)");
-        String[] splits = ui.getInput().split(":");
-        LocalTime time = LocalTime.of(Integer.parseInt(splits[0]),Integer.parseInt(splits[1]));
-        order = new Order(pizza,time);
-        order.writeOrderToFile();
-        String[] printOrder = order.returnOrder();
-        for(String foodItem : printOrder){
-            ui.println(foodItem);
-        }
+        return pizzas;
     }
 
     private void completeOrder() {
         int choice = 0;
         int[] orderNumbers = orderHandler.getOrderNumbersToMake();
-        SortedQueue<Order> orders = orderHandler.loadFromFile(); 
+        SortedQueue<Order> orders = orderHandler.loadOrdersFromFile(); 
         while (choice != -1) {
             ui.println("Vælg ordrenummer");
             ui.println("Indtast -1 for at afslutte ordre");
@@ -253,19 +263,19 @@ public class UIController {
                 }
                 switch (choice) {
                     case 1:
-                        statistics.turnoverLastSevenDays();
+                        ui.println(statistics.turnoverForDuration(0, 0, 1));
                         break;
                     case 2:
-                        statistics.turnoverLastFourWeeks();
+                        ui.println(statistics.turnoverForDuration(0, 0, 4));
                         break;
                     case 3:
-                        statistics.turnoverLastsixMonths();
+                        ui.println(statistics.turnoverForDuration(0, 6, 0));
                         break;
                     case 4:
-                        statistics.turnoverLastTwelveMonths();
+                        ui.println(statistics.turnoverForDuration(0, 12, 0));
                         break;
                     case 5:
-                        statistics.turnoverAllTime();
+                        ui.println(statistics.turnoverAllTime());
                         break;
                 }
 
@@ -292,16 +302,16 @@ public class UIController {
                 }
                 switch (choice) {
                     case 1:
-                        statistics.popularPizzaLastSevenDays();
+                        ui.println(statistics.popularPizzaForDuration(0, 0, 1));
                         break;
                     case 2:
-                        statistics.popularPizzaLastFourWeeks();
+                        ui.println(statistics.popularPizzaForDuration(0, 0, 4));
                         break;
                     case 3:
-                        statistics.popularPizzaLastsixMonths();
+                        ui.println(statistics.popularPizzaForDuration(0, 6, 0));
                         break;
                     case 4:
-                        statistics.popularPizzaLastTwelveMonths();
+                        ui.println(statistics.popularPizzaForDuration(0, 12, 0));
                         break;
                     case 5:
                         statistics.popularPizzaAllTime();

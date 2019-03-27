@@ -1,16 +1,19 @@
 package core;
 //Alexander
 
-import Storage.FileHandler;
+import Storage.Storage;
+import UI.UI;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Menu {
 
+    private UI ui;
     private ArrayList<Pizza> menu;
-    final private FileHandler fileHandler = new FileHandler();
+    private final Storage storage;
 
-    public Menu() {
+    public Menu(UI ui, Storage storage) {
+        this.ui = ui;
+        this.storage = storage;
         this.menu = new ArrayList();
         menuFromFile();
     }
@@ -18,13 +21,11 @@ public class Menu {
     public ArrayList<Pizza> getMenu() {
         return menu;
     }
-    
-    
 
     private void menuFromFile() {
         String[] splitLine;
         Pizza pizza;
-        for (String pizzaFile : fileHandler.readFromFile("Menu.txt")) {
+        for (String pizzaFile : storage.readFromFile(Storage.MENU_FILE)) {
             splitLine = pizzaFile.split(" ");
             pizza = new Pizza(Integer.parseInt(splitLine[0]), splitLine[1], splitLine[2], Double.parseDouble(splitLine[3]));
             menu.add(pizza);
@@ -47,16 +48,15 @@ public class Menu {
         //String[] userInput = userInputNewPizza();
         Pizza pizza = new Pizza(nextPizzaNumber(), userInput[0], userInput[1], Double.parseDouble(userInput[2]));
         String newPizza = pizza.toString();
-        fileHandler.writeToFile(newPizza, "Menu.txt");
+        storage.writeToFile(newPizza, Storage.MENU_FILE);
         menu.add(pizza);
         sortPizza();
     }
 
     public void removePizza(int pizzaNumber) {
-        fileHandler.removePizza(pizzaNumber);
+        storage.removePizza(pizzaNumber);
         for (int i = 0; i < menu.size(); i++) {
             if (menu.get(i).getNumber() == pizzaNumber) {
-                menu.get(i).removePizza();
                 menu.remove(i);
                 i = menu.size();
             }
@@ -85,9 +85,9 @@ public class Menu {
     }
 
     public void printMenu() {
-        System.out.println("---------------------- Mario's Pizzabar ----------------------");
+        ui.println("---------------------- Mario's Pizzabar ----------------------");
         for (Pizza pizza : menu) {
-            System.out.println(pizza + " kr.");
+            ui.println(pizza + " kr.");
         }
     }
 

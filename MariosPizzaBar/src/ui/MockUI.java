@@ -2,35 +2,46 @@ package UI;
 
 import java.util.ArrayList;
 
-
-public class MockUI implements UI{
-
-    private ArrayList<String> output;
+/**
+ * @author Benjamin
+ */
+public class MockUI implements UI {
+    private ArrayList<String> output = new ArrayList<>();
     private String[] input;
     private int inputIndex;
     private int outputIndex;
-
+    
+    public MockUI(String[] input) {
+        this.input = input;
+    }
+    
     @Override
     public String getInput() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return input[inputIndex++];
     }
 
     @Override
-    public void println(String words) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void println(String str) {
+        output.add(str);
+    }
+
+    public String getOutput() {
+        return output.get(outputIndex++);
+    }
+
+    public ArrayList<String> getOutputAsArray() {
+        return output;
     }
     
-    public String getOutput(){
-        return "";
-    }
-    
-    public int getOutputSize(){
-        return 1;
+    public int getOutputSize() {
+        return output.size();
     }
 
     @Override
     public void printf(String str, Object... format) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        output.add(str);
+        for (Object object : format) {
+            output.add((String)object);
+        }
     }
-    
 }
