@@ -30,7 +30,7 @@ public class OrderHandlerTest {
         fileLines.add("2 Amerikaner tomatsauce,ost,oksefars,oregano 57");
         fileLines.add("3 Hawaii tomatsauce,ost,skinke,ananas 61");
         mockSto.setFileLines(fileLines);
-        menu = new Menu(mockUI,mockSto);
+        menu = new Menu(mockUI, mockSto);
         
         // Clear and set file lines for the orders.
         fileLines.clear();
