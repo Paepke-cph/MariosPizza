@@ -3,7 +3,6 @@ package Storage;
 import java.util.ArrayList;
 
 /**
- *
  * @author Alexander
  */
 public interface Storage {

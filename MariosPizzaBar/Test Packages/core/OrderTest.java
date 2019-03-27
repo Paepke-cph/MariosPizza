@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ * @author Tobias
+ * @author Alexander 
+ */
 public class OrderTest {
 
     private Order order;

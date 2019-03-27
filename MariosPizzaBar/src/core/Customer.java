@@ -1,6 +1,8 @@
 package core;
 
-
+/**
+ * @author Benjamin
+ */
 public class Customer {
 
     private String firstName;

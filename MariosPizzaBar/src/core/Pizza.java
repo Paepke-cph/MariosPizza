@@ -1,5 +1,8 @@
 package core;
-//Alexander
+
+/**
+ * @author Benjamin
+ */
 public class Pizza {
     private int number;
     private String name;

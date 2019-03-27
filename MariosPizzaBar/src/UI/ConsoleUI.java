@@ -2,7 +2,9 @@ package UI;
 
 import java.util.Scanner;
 
-
+/**
+ * @author Alexander 
+ */
 public class ConsoleUI implements UI{
 
     Scanner input = new Scanner(System.in);

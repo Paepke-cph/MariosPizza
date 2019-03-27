@@ -1,6 +1,8 @@
 package core;
-//Alexander
 
+/**
+ * @author Alexander 
+ */
 import Storage.Storage;
 import UI.UI;
 import java.util.ArrayList;

@@ -1,6 +1,8 @@
 package core;
 
-//Alexander
+/**
+ * @author Mads 
+ */
 import Storage.Storage;
 import java.time.LocalDate;
 import java.util.ArrayList;

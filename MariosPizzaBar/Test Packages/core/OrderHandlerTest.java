@@ -8,6 +8,10 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import toolbox.SortedQueue;
 
+/**
+ * @author Tobias
+ * @author Alexander
+ */
 public class OrderHandlerTest {
 
     private MockUI mockUI;

@@ -7,6 +7,9 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import toolbox.SortedQueue;
 
+/**
+ * @author Mads
+ */
 public class UIController {
 
     private final UI ui;
